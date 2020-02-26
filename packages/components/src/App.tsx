@@ -40,7 +40,7 @@ export function App() {
               </Text>
               <Text style={styles.sectionDescription}>
                 It will share the same code from mobile, unless you create platform-specific files 
-                using the <Text style={styles.highlight}>.web.tsx</Text> extension 
+                using the cool <Text style={styles.highlight}>.web.tsx</Text> extension 
                 (also supports <Text style={styles.highlight}>.android</Text>,{' '}
                 <Text style={styles.highlight}>.ios</Text>,{' '}
                 <Text style={styles.highlight}>.native</Text>, etc).
