@@ -4,7 +4,7 @@ import { Button, StyleSheet, View, Text } from 'react-native';
 export const App = () => {
   //State
   const [count, counter] = useState(1);
-  const [title, setTitle] = useState('useEffect() in Hooks');
+  const [title, setTitle] = useState('useEffect() in ');
   //useEffect
   useEffect(() => {
     console.log('useEffect has been called!');
