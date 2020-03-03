@@ -2,7 +2,7 @@ import axios from "axios";
 import { combineEpics, Epic } from "redux-observable";
 import { from } from "rxjs";
 import { filter, map, switchMap } from "rxjs/operators";
-import { ActionType, isOfType } from "typesafe-actions";
+import { ActionType, isActionOf } from "typesafe-actions";
 import * as actions from "../actions";
 import { incrementCounter } from "../actions";
 import { INCREMENT_COUNTER } from "../constants";
@@ -12,7 +12,7 @@ type Action = ActionType<typeof actions>;
 
 const loadTodosEpic: Epic<Action, Action, RootState> = (action$, state$) =>
   action$.pipe(
-    filter(isOfType(INCREMENT_COUNTER)),
+    filter(isActionOf(actions.incrementCounter)),
 
     switchMap(action => {
       console.log(action.payload.count)

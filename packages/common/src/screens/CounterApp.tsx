@@ -41,8 +41,8 @@ const CounterApp = () => {
     );
 };
 
-export default CounterApp;
 store.subscribe(CounterApp);
+export default CounterApp;
 
 const styles = StyleSheet.create({
     container: {
