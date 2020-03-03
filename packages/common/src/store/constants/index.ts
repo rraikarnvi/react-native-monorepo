@@ -1,11 +1,4 @@
-export enum TodosActionTypes {
-    LOAD_TODOS = 'todos/load',
-    LOADING_TODOS = 'todos/loading',
-    LOADED_TODOS = 'todos/loaded',
-    LOADING_TODOS_FAILED = 'todos/loading_failed',
-  
-    ADD_TODO = 'todos/add',
-    ADDING_TODO = 'todos/adding',
-    ADDED_TODOS = 'todos/added',
-    ADDING_TODOS_FAILED = 'todos/adding_failed'
-  }
+  // NOTE
+// DO NOT USE dynamic string operations(like template string) as action type property.
+// see more details: https://github.com/piotrwitek/typesafe-actions#--the-actions
+export const INCREMENT_COUNTER   = "INCREMENT_COUNTER";

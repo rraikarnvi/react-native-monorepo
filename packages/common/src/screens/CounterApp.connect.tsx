@@ -1,35 +1,52 @@
-import { IState } from '../store/reducers';
-import { addTodo, loadTodos } from '../store/actions';
-import { connect } from 'react-redux';
-import { ITodoItem, ApiStatus } from '../models/model';
+// import { RootState } from '../store/reducers';
+// import { incrementCounter } from '../store/actions';
+// import { connect } from 'react-redux';
+// import CounterApp from './CounterApp';
+
+
+// export interface IAppStateProps {
+//   loadingStatus: true;
+//   counter: 0;
+// }
+
+// export interface IAppDispatchProps {
+//   loadTodos: () => void;
+//   addTodo: (description: string) => void;
+// }
+
+// export interface IAppOwnState {
+//   description: string;
+// }
+
+// type AppProps = IAppStateProps & IAppDispatchProps 
+// function mapStateToDispatch(state: IState): IAppStateProps {
+//   return {
+//     todos: state.todos.todos,
+//     loadingStatus: state.todos.loadingStatus
+//   }
+// }
+
+// const mapDispatchToProps: IAppDispatchProps = {
+//   addTodo,
+//   loadTodos
+// }
+
+// export default connect(mapStateToDispatch, mapDispatchToProps)(CounterApp);
+
+import { Dispatch } from "redux";
+import { connect } from "react-redux";
+
+import { ActionsType, RootStateType } from "../store";
 import CounterApp from './CounterApp';
 
 
-export interface IAppStateProps {
-  loadingStatus: ApiStatus;
-  todos: ITodoItem[];
+interface OwnProps {
 }
 
-export interface IAppDispatchProps {
-  loadTodos: () => void;
-  addTodo: (description: string) => void;
-}
+const mapStateToProps = (state: RootStateType) => ({
+  counter: state.counter.counter,
+});
 
-export interface IAppOwnState {
-  description: string;
-}
+const mapDispatchToProps = (dispatch: Dispatch<ActionsType>, props: OwnProps) => ({});
 
-type AppProps = IAppStateProps & IAppDispatchProps 
-function mapStateToDispatch(state: IState): IAppStateProps {
-  return {
-    todos: state.todos.todos,
-    loadingStatus: state.todos.loadingStatus
-  }
-}
-
-const mapDispatchToProps: IAppDispatchProps = {
-  addTodo,
-  loadTodos
-}
-
-export default connect(mapStateToDispatch, mapDispatchToProps)(CounterApp);
+export default connect(mapStateToProps, mapDispatchToProps)(CounterApp);

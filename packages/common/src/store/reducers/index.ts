@@ -1,14 +1,12 @@
 import { combineReducers } from 'redux';
-import todosReducer, { ITodoState, initialTodoState } from './todosReducer';
+import counterReducer, { CounterState } from './todosReducer';
 
-export interface IState {
-  todos: ITodoState;
-}
-
-export const initialState: IState = {
-  todos: initialTodoState
+export type RootState = {
+  counter: CounterState;
 };
 
-export default combineReducers({
-  todos: todosReducer
+const reducers = combineReducers({
+  counter: counterReducer,
 });
+
+export default reducers;

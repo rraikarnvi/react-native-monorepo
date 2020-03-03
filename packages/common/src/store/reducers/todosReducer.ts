@@ -1,48 +1,24 @@
+import { INCREMENT_COUNTER } from './../constants/index';
 import produce from 'immer';
-import { ApiStatus, ITodoItem } from '../../models/model';
-import { TodosAction, TodosActionTypes } from '../actions';
+import * as actions from '../actions';
+import { ActionType,getType } from 'typesafe-actions';
 
-export const initialTodoState: ITodoState = {
-  loadingStatus: ApiStatus.LOADING,
-  addingStatus: ApiStatus.LOADED,
-  todos: []
+type Action = ActionType<typeof actions>;
+
+export interface CounterState {
+  loadingStatus: boolean;
+  counter: number
+}
+export const initialCounterState: CounterState = {
+  loadingStatus: false,
+  counter: 0
 }
 
-export default function todosReducer(state: ITodoState = initialTodoState, action: TodosAction) {
-  return produce(state, draft => {
-    switch (action.type) {
-      case TodosActionTypes.LOAD_TODOS:
-      case TodosActionTypes.LOADING_TODOS:
-        draft.loadingStatus = ApiStatus.LOADING;
-        break;
-
-      case TodosActionTypes.LOADING_TODOS_FAILED:
-        draft.loadingStatus = ApiStatus.FAILED;
-        break;
-
-      case TodosActionTypes.LOADED_TODOS:
-        draft.loadingStatus = ApiStatus.LOADED;
-        draft.todos = action.payload.todos;
-        break;
-
-      case TodosActionTypes.ADD_TODO:
-      case TodosActionTypes.ADDING_TODO:
-        draft.addingStatus = ApiStatus.LOADING;
-        break;
-
-      case TodosActionTypes.ADDING_TODOS_FAILED:
-        draft.addingStatus = ApiStatus.FAILED;
-        break;
-
-      case TodosActionTypes.ADDED_TODOS:
-        draft.todos.push(action.payload.todo);
-        break;
-    }
-  });
-}
-
-export interface ITodoState {
-  loadingStatus: ApiStatus;
-  addingStatus: ApiStatus;
-  todos: ITodoItem[];
+export default function counterReducer(state: CounterState = initialCounterState, action: Action) {
+  switch (action.type) {
+    case getType(actions.incrementCounter):
+      return Object.assign({}, state, { loadingStatus: false,counter:action.payload.count+1 });
+    default:
+      return state;
+  }
 }
