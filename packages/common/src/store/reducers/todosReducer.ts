@@ -17,7 +17,8 @@ export const initialCounterState: CounterState = {
 export default function counterReducer(state: CounterState = initialCounterState, action: Action) {
   switch (action.type) {
     case getType(actions.incrementCounter):
-      return Object.assign({}, state, { loadingStatus: false,counter:action.payload.count+1 });
+      console.log(action.payload.count)
+      return Object.assign({}, { loadingStatus: false,counter:state.counter+1 } );
     default:
       return state;
   }

@@ -12,7 +12,7 @@ type Action = ActionType<typeof actions>;
 
 const loadTodosEpic: Epic<Action, Action, RootState> = (action$, state$) =>
   action$.pipe(
-    filter(isActionOf(actions.incrementCounter)),
+    filter(isActionOf(actions.decrementCounter)),
 
     switchMap(action => {
       console.log(action.payload.count)

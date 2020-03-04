@@ -1,12 +1,16 @@
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
-import todoEpics from './todoEpics';
-import { RootState } from '../reducers';
-import { isOfType,ActionType } from "typesafe-actions";
-
+import { ActionType } from "typesafe-actions";
 import * as actions from "../actions";
+import { RootState } from '../reducers';
+import todoEpics from './todoEpics';
 
-type Action = ActionType<typeof actions>;
+export type RootStateType = RootState;
+
+export type ActionsType = ActionType<typeof actions>;
 
 export const rootEpic = combineEpics(todoEpics);
 
-export default createEpicMiddleware<Action, Action, RootState>();
+export default createEpicMiddleware<
+    ActionsType,
+    ActionsType,
+    RootStateType>();
