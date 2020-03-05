@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import { Observable, Subscription } from 'rxjs';
 import { store } from '../store';
-import { INCREMENT_COUNTER, DECREMENT_COUNTER } from '../store/constants';
-import { CounterState } from '../store/reducers/counterReducer';
+import { DECREMENT_COUNTER, INCREMENT_COUNTER } from '../store/constants';
 import { RootState } from '../store/reducers';
 
 const CounterApp = () => {
@@ -11,10 +10,10 @@ const CounterApp = () => {
     const state$ = getState$(store);
     const [state, counter] = useState(store.getState().counter)
     let subscription: Subscription;
-    
+
     useEffect(() => {
         console.log('componentDidMount!');
-        subscription = state$.subscribe(function(state:RootState){
+        subscription = state$.subscribe(function (state: RootState) {
             counter(state.counter);
         });
     }, []);

@@ -1,12 +1,11 @@
-import { applyMiddleware, createStore, compose } from 'redux';
+import { applyMiddleware, compose, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-
-import rootReducer, { initialCounterState } from './reducers/counterReducer';
-import epicMiddleware, { rootEpic } from './epics';
 import { ActionType } from "typesafe-actions";
-
 import * as actions from "./actions";
+import epicMiddleware, { rootEpic } from './epics';
 import reducers, { RootState } from "./reducers";
+
+
 
 export type RootStateType = RootState;
 export type ActionsType = ActionType<typeof actions>;
@@ -41,12 +40,6 @@ function configureStore(initialState?: RootStateType) {
 }
 
 const store = configureStore();
-
-// const store = createStore(
-//   rootReducer,
-//   RootState,
-//   composeEnhancer(applyMiddleware(epicMiddleware))
-// );
 
 epicMiddleware.run(rootEpic);
 
