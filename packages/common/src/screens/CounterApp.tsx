@@ -8,49 +8,15 @@ import { CounterState } from '../store/reducers/counterReducer';
 import { ActionsType, RootStateType } from '../store/epics';
 import { connect } from 'react-redux';
 
-const mapStateToProps = (state: RootStateType) => {
-    return {
-        countState: state.counter,
-    }
-}
-
-const mapDispatchToProps = (dispatch: Dispatch<ActionsType>) => {
-    return {
-        onIncreaseClick: () => {
-            dispatch({ type: INCREMENT_COUNTER });
-        }
-    }
-};
 
 export interface CounterProps {
     countState: CounterState;
-  }
+}
 
-// const CounterApp: React.SFC<CounterState> = (counter :CounterState) => {
-    export const CounterApp = ({ countState }:CounterProps) => {
-
-    // const state$ = getState$(store);
-    // const [state, counter] = useState(store.getState().counter)
-    // let subscription: Subscription;
-
-    // useEffect(() => {
-    //     console.log('componentDidMount!');
-    //     subscription = state$.subscribe(function (state: RootState) {
-    //         counter(state.counter);
-    //     });
-    // }, []);
-
-    // useEffect(() => {
-    //     return () => {
-    //         console.log('will unmount');
-    //         subscription.unsubscribe();
-    //     }
-    // }, []);
-
-    // useEffect(() => console.log('mounted or updated'));
+export const CounterApp = ({ countState }: CounterProps) => {
 
     console.log("state");
-    
+
     console.log(countState.counter);
 
     return (
@@ -83,7 +49,6 @@ const getState$ = (store: any) => {
     });
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CounterApp);
 
 const styles = StyleSheet.create({
     container: {
