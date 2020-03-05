@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import { Observable, Subscription } from 'rxjs';
-import store from '../store';
+import { store } from '../store';
 import { INCREMENT_COUNTER, DECREMENT_COUNTER } from '../store/constants';
 import { CounterState } from '../store/reducers/counterReducer';
+import { RootState } from '../store/reducers';
 
 const CounterApp = () => {
+
     const state$ = getState$(store);
-    const [state, counter] = useState(store.getState())
+    const [state, counter] = useState(store.getState().counter)
     let subscription: Subscription;
+    
     useEffect(() => {
         console.log('componentDidMount!');
-        subscription = state$.subscribe(counter);
+        subscription = state$.subscribe(function(state:RootState){
+            counter(state.counter);
+        });
     }, []);
 
     useEffect(() => {
@@ -30,6 +35,7 @@ const CounterApp = () => {
                     store.dispatch({ type: INCREMENT_COUNTER });
                 }}></Button>
                 {state.counter > 2 ? <Text>Name: {state.counter}</Text> : <Text>Cool: {state.counter}</Text>}
+                <Text>{}</Text>
                 <Button title="decrement" onPress={() => {
                     store.dispatch({ type: DECREMENT_COUNTER, payload: { count: 0 } });
                 }}></Button>
@@ -39,7 +45,7 @@ const CounterApp = () => {
 };
 
 const getState$ = (store: any) => {
-    return new Observable<CounterState>(function (observer) {
+    return new Observable<RootState>(function (observer) {
         // emit the current state as first value:
         observer.next(store.getState());
         const unsubscribe = store.subscribe(function () {

@@ -1,4 +1,4 @@
-import { applyMiddleware, createStore } from 'redux';
+import { applyMiddleware, createStore, compose } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import rootReducer, { initialCounterState } from './reducers/counterReducer';
@@ -15,12 +15,39 @@ const composeEnhancer = composeWithDevTools({
   name: 'React Clean Architecture'
 });
 
-const store = createStore(
-  rootReducer,
-  initialCounterState,
-  composeEnhancer(applyMiddleware(epicMiddleware))
-);
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: Function;
+  }
+}
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+// Create store
+function configureStore(initialState?: RootStateType) {
+  // configure middlewares
+  const middlewares = [
+    epicMiddleware,
+  ];
+  // compose enhancers
+  const enhancer = composeEnhancers(
+    applyMiddleware(...middlewares)
+  );
+  // create store
+  return createStore(
+    reducers,
+    initialState,
+    enhancer
+  );
+}
+
+const store = configureStore();
+
+// const store = createStore(
+//   rootReducer,
+//   RootState,
+//   composeEnhancer(applyMiddleware(epicMiddleware))
+// );
 
 epicMiddleware.run(rootEpic);
 
-export default store;
+export { store, actions };
