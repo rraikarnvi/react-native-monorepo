@@ -6,7 +6,7 @@ import store from './store'
 export default function App() {
   return (
     <Provider store={store}>
-    <CounterApp counter={0}></CounterApp>
+    <CounterApp></CounterApp>
     </Provider>
   );
 };

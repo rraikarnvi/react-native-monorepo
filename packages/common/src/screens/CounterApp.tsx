@@ -9,16 +9,6 @@ import { CounterState } from '../store/reducers/todosReducer';
 import { incrementCounter } from '../store/actions'
 import { Store } from 'redux';
 
-interface OwnProps {
-    counter:number
-}
-
-const mapStateToProps = (state: RootStateType) => ({
-  counter: state.counter.counter,
-});
-
-const mapDispatchToProps = (dispatch: Dispatch<ActionsType>, props: OwnProps) => ({ counter:0});
-
 const CounterApp=() => {
     console.log("loading");
     const state$ = getState$(store);
@@ -64,7 +54,7 @@ const getState$ = (store:any) => {
     });
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CounterApp);
+export default CounterApp;
 
 const styles = StyleSheet.create({
     container: {
