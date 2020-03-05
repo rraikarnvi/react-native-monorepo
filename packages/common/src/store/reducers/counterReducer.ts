@@ -1,4 +1,4 @@
-import { INCREMENT_COUNTER } from './../constants/index';
+import { INCREMENT_COUNTER } from '../constants/index';
 import produce from 'immer';
 import * as actions from '../actions';
 import { ActionType,getType } from 'typesafe-actions';
@@ -18,6 +18,8 @@ export default function counterReducer(state: CounterState = initialCounterState
   switch (action.type) {
     case getType(actions.incrementCounter):
       return Object.assign({},state, { loadingStatus: false,counter:state.counter+1 } );
+    case getType(actions.decrementCounter):
+        return Object.assign({},state, { loadingStatus: false,counter:state.counter-1 } );
     default:
       return state;
   }

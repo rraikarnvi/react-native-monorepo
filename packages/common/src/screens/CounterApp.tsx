@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import { Observable, Subscription } from 'rxjs';
 import store from '../store';
-import { INCREMENT_COUNTER } from '../store/constants';
-import { CounterState } from '../store/reducers/todosReducer';
+import { INCREMENT_COUNTER, DECREMENT_COUNTER } from '../store/constants';
+import { CounterState } from '../store/reducers/counterReducer';
 
 const CounterApp = () => {
     const state$ = getState$(store);
@@ -26,9 +26,12 @@ const CounterApp = () => {
     return (
         <View style={styles.container}>
             <View style={styles.wrapper}>
-                {state.counter > 2 ? <Text>Name: {state.counter}</Text> : <Text>Cool: {state.counter}</Text>}
                 <Button title="increment" onPress={() => {
                     store.dispatch({ type: INCREMENT_COUNTER });
+                }}></Button>
+                {state.counter > 2 ? <Text>Name: {state.counter}</Text> : <Text>Cool: {state.counter}</Text>}
+                <Button title="decrement" onPress={() => {
+                    store.dispatch({ type: DECREMENT_COUNTER, payload: { count: 0 } });
                 }}></Button>
             </View>
         </View>

@@ -1,7 +1,7 @@
 import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-import rootReducer, { initialCounterState } from './reducers/todosReducer';
+import rootReducer, { initialCounterState } from './reducers/counterReducer';
 import epicMiddleware, { rootEpic } from './epics';
 import { ActionType } from "typesafe-actions";
 
