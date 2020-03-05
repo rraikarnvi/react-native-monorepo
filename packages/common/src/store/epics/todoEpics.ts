@@ -17,7 +17,7 @@ const loadTodosEpic: Epic<Action, Action, RootState> = (action$, state$) =>
     switchMap(action => {
       console.log(action.payload.count)
       return from(axios.get("http://localhost:5000/todos")).pipe(
-        map(response => incrementCounter(response.data.data)),
+        map(response => incrementCounter()),
       )
     }
     )

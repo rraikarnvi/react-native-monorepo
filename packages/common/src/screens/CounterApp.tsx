@@ -1,46 +1,41 @@
-import React, { useEffect, useState, Dispatch } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import store from '../store';
 import { INCREMENT_COUNTER } from '../store/constants';
-import { ActionsType, RootStateType } from "../store";
-import { connect } from 'react-redux';
 import { CounterState } from '../store/reducers/todosReducer';
-import { incrementCounter } from '../store/actions'
-import { Store } from 'redux';
 
-const CounterApp=() => {
-    console.log("loading");
+const CounterApp = () => {
     const state$ = getState$(store);
-    const [count,counter] = useState(store.getState().counter)
-    
-    
+    const [state, counter] = useState(store.getState())
+    let subscription: Subscription;
     useEffect(() => {
-        console.log('useEffect has been called!');
-        const subscription = state$.subscribe(function (state) {
-            console.log("counter is")
-            counter(state.counter);
-    
-        });
-    },[]);
+        console.log('componentDidMount!');
+        subscription = state$.subscribe(counter);
+    }, []);
+
+    useEffect(() => {
+        return () => {
+            console.log('will unmount');
+            subscription.unsubscribe();
+        }
+    }, []);
+
+    useEffect(() => console.log('mounted or updated'));
+
     return (
         <View style={styles.container}>
             <View style={styles.wrapper}>
-                <Text>Name: {count}</Text>
+                {state.counter > 2 ? <Text>Name: {state.counter}</Text> : <Text>Cool: {state.counter}</Text>}
                 <Button title="increment" onPress={() => {
-                    store.dispatch({
-                        type: INCREMENT_COUNTER,
-                        payload: {
-                            count: 0
-                        }
-                    });
+                    store.dispatch({ type: INCREMENT_COUNTER });
                 }}></Button>
             </View>
         </View>
     );
 };
 
-const getState$ = (store:any) => {
+const getState$ = (store: any) => {
     return new Observable<CounterState>(function (observer) {
         // emit the current state as first value:
         observer.next(store.getState());
