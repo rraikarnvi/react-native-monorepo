@@ -8,13 +8,14 @@ import { CounterState } from '../store/reducers/counterReducer';
 import { ActionsType, RootStateType } from '../store/epics';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
+import PATH from '../util/constants';
 
 
-export interface CounterProps extends RouteComponentProps{
+export interface CounterProps extends RouteComponentProps {
     countState: CounterState;
 }
 
-export const CounterApp = ({ countState,history }: CounterProps) => {
+export const CounterApp = ({ countState, history }: CounterProps) => {
 
     console.log("state");
 
@@ -29,7 +30,11 @@ export const CounterApp = ({ countState,history }: CounterProps) => {
                 {countState.counter > 2 ? <Text>Name: {countState.counter}</Text> : <Text>Cool: {countState.counter}</Text>}
                 <Text>{}</Text>
                 <Button title="decrement" onPress={() => {
-                    store.dispatch({ type:constants.DECREMENT_COUNTER, payload: { count: 0 } });
+                    store.dispatch({ type: constants.DECREMENT_COUNTER, payload: { count: 0 } });
+                }}></Button>
+
+                <Button title="login" onPress={() => {
+                    history.push(PATH.LOGIN_SCREEN)
                 }}></Button>
             </View>
         </View>
