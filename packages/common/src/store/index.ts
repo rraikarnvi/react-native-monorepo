@@ -4,11 +4,22 @@ import { ActionType } from "typesafe-actions";
 import * as actions from "./actions";
 import epicMiddleware, { rootEpic } from './epics';
 import reducers, { RootState } from "./reducers";
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from './storage';
 
-
+import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 
 export type RootStateType = RootState;
 export type ActionsType = ActionType<typeof actions>;
+
+
+const persistConfig = {
+  key: 'root',
+  storage: storage,
+  stateReconciler: autoMergeLevel2, // see "Merge Process" section for details.
+  blacklist: ['splash']
+ };
+
 
 const composeEnhancer = composeWithDevTools({
   name: 'React Clean Architecture'
@@ -33,14 +44,15 @@ function configureStore(initialState?: RootStateType) {
   );
   // create store
   return createStore(
-    reducers,
-    initialState,
+    pReducer,
     enhancer
   );
 }
 
+const pReducer = persistReducer(persistConfig, reducers);
 const store = configureStore();
+const persistor = persistStore(store);
 
 epicMiddleware.run(rootEpic);
 
-export { store, actions };
+export { store, actions, persistor };

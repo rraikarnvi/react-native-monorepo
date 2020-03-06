@@ -1,6 +1,6 @@
 import { RootStateType, ActionsType } from "../store/epics";
 import { Dispatch } from "react";
-import { INCREMENT_COUNTER } from "../store/constants";
+import  constants from "../store/constants";
 import { connect } from "react-redux";
 import { CounterApp } from "./CounterApp";
 
@@ -13,7 +13,7 @@ const mapStateToProps = (state: RootStateType) => {
 const mapDispatchToProps = (dispatch: Dispatch<ActionsType>) => {
     return {
         onIncreaseClick: () => {
-            dispatch({ type: INCREMENT_COUNTER });
+            dispatch({ type: constants.INCREMENT_COUNTER });
         }
     }
 };
