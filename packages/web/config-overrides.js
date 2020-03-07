@@ -29,5 +29,37 @@ module.exports = function override(config, env) {
   config.plugins.push(
     new webpack.DefinePlugin({ __DEV__: env !== 'production' })
   )
+  config.module.rules.push(
+    {
+        test: /\.js$/,
+        use: {
+            loader: 'babel-loader',
+            options: {
+                // Disable reading babel configuration
+                babelrc: false,
+                configFile: false,
+
+                // The configration for compilation
+                presets: [
+                    '@babel/preset-env',
+                    '@babel/preset-react'
+                ],
+                plugins: [
+                    '@babel/plugin-proposal-class-properties',
+                    '@babel/plugin-proposal-object-rest-spread'                  
+               ]
+            }
+        }
+    }
+)
+config.module.rules.push(
+  {
+    test: /\.ttf$/,
+    use: {
+          loader: 'file-loader'
+          
+      }
+  }
+)
   return config
 }
